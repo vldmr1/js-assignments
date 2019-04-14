@@ -291,7 +291,15 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+    let ccnArr = ccn.toString().split('');
+  
+    if (ccnArr.length % 2 === 0) {
+        let summed = ccnArr.map((elem, ind) => ind % 2 === 0 ? +elem * 2 > 9 ? +elem * 2 - 9 : +elem * 2 : +elem);
+        return summed.reduce((a, b) => a + b) % 10 === 0;
+    } else {
+        let summed = ccnArr.map((elem, ind) => ind % 2 !== 0 ? +elem * 2 > 9 ? +elem * 2 - 9 : +elem * 2 : +elem);
+        return summed.reduce((a, b) => a + b) % 10 === 0;
+    }
 }
 
 
@@ -386,6 +394,36 @@ function isBracketsBalanced(str) {
  */
 function timespanToHumanString(startDate, endDate) {
     throw new Error('Not implemented');
+    let end = new Date(endDate);
+    let start = new Date(startDate);
+  
+    let diffInSeconds = (end.getTime() - start.getTime()) / 1000;
+
+  
+    switch(true) {
+        case (diffInSeconds <= 45):
+          return 'a few seconds ago';
+        case (diffInSeconds > 45 && diffInSeconds <= 90):
+          return 'a minute ago';
+        case (diffInSeconds > 90 && diffInSeconds / 60 <= 45):
+          return `${diffInSeconds === +diffInSeconds.toFixed(0) ? Math.floor(diffInSeconds / 60) : Math.ceil(diffInSeconds / 60)} minutes ago`;
+        case (diffInSeconds / 60 > 45 && diffInSeconds / 60 <= 90):
+          return `an hour ago`;
+        case (diffInSeconds / 60 > 90 && diffInSeconds / 3600 <= 22):
+          return `${diffInSeconds === +diffInSeconds.toFixed(0) ? Math.floor(diffInSeconds / 3600) : Math.ceil(diffInSeconds / 3600)} hours ago`;
+        case (diffInSeconds / 3600 > 22 && diffInSeconds / 3600 <= 36):
+          return `a day ago`;
+        case (diffInSeconds / 3600 > 36 && diffInSeconds / 86400 <= 25):
+          return `${diffInSeconds === +diffInSeconds.toFixed(0) ? Math.floor(diffInSeconds / 86400) : Math.ceil(diffInSeconds / 86400)} days ago`;
+        case (diffInSeconds / 86400 > 25 && diffInSeconds / 86400 <= 45):
+          return `a month ago`;
+        case (diffInSeconds / 86400 > 45 && diffInSeconds / 86400 <= 345):
+          return `${diffInSeconds === +diffInSeconds.toFixed(0) ? Math.floor(diffInSeconds / 86400 / 30) : Math.ceil(diffInSeconds / 86400 / 30)} months ago`;
+        case (diffInSeconds / 86400 > 345 && diffInSeconds / 86400 <= 545):
+          return `a year ago`;
+        case (diffInSeconds / 86400 > 545):
+          return `${Math.floor(diffInSeconds / 86400 /365)} years ago`;
+      }
 }
 
 
@@ -448,8 +486,20 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
+
 function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+    const result = [];
+    for (let i = 0; i < m1.length; i++) {
+        result[i] = [];
+        for (let j = 0; j < m2[0].length; j++) {
+            let sum = 0;
+            for (let n = 0; n < m1[0].length; n++) {
+                sum += m1[i][n] * m2[n][j];
+            }
+            result[i][j] = sum;
+        }
+    }
+    return result;
 }
 
 
